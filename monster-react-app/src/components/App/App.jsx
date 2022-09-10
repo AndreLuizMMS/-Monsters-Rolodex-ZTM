@@ -12,11 +12,9 @@ class App extends Component {
       monster: []
     }
 
-    console.log('1')
   }
 
   componentDidMount() {
-    console.log('3')
     fetch(url)
       .then(res => res.json())
       .then(users => this.setState(() => {
@@ -25,9 +23,27 @@ class App extends Component {
   }
 
   render() {
-    console.log('2')
     return (
       <div className="App">
+        <input
+          className="search-box"
+          placeholder='Search'
+          type="search"
+          onChange={e => {
+            //.includes() é não CaseSensitive [uma var pra ser tudo minúsculo na busca]
+            const searchInptValue = e.target.value.toLowerCase();
+
+            const filtrados = this.state.monster.filter(monster =>
+              monster.name.toLowerCase().includes(searchInptValue)
+            );
+            // imbutabilidade
+            // nao modificar dados, e sim criar novos (uma var pra .filter)
+            this.setState(() => {
+              return { monster: filtrados }
+            });
+          }}
+        />
+
         {this.state.monster.map((monster) => {
           return (
             <div key={monster.id}>
