@@ -1,6 +1,7 @@
 import { Component } from 'react'
-import CardList from '../card-list/cardList';
 import './App.css'
+import CardList from '../card-list/Card-List';
+import SearchBox from '../search-box/Search-Box';
 
 const url = 'https://jsonplaceholder.typicode.com/users' // API 
 
@@ -45,21 +46,10 @@ class App extends Component {
 
     return (
       <div className="App">
-        <input
-          className="search-box"
-          placeholder='Search'
-          type="search"
-          onChange={onSearchChange}
-        />
-        <CardList monster={'props de monster'} />
-{/* 
-        {filtrados.map((monster) => {
-          return (
-            <div key={monster.id}>
-              <h3> {monster.name} </h3>
-            </div>
-          )
-        })} */}
+
+        <SearchBox />
+
+        <CardList monster={filtrados} />
       </div>
     )
   }
