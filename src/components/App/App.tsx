@@ -1,19 +1,30 @@
 import { useState, useEffect } from 'react';
 
+import { getData } from '../../utils/data.utils';
+
 import CardList from '../card-list/Card-List';
 import SearchInput from '../search-input/Search-input';
 
 import './App.css';
 
+export type Monster {
+  id: string;
+  name: string;
+  email: string;
+
+}
+
 function App() {
-  const [monsters, setMonsters] = useState([]); // lista de monstros
+  const [monsters, setMonsters] = useState<Monster[]>([]); // lista de monstros
   const [searchInput, setsearchInput] = useState(''); // valor do input pra fazer a busca
   const [filtrados, setFiltrados] = useState(monsters); // armazena  os montros filtardos à partir do input(o de cima)
 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(res => res.json())
-      .then(users => setMonsters(users)); // lista de monstros
+    const fetchUsers = async () => {
+      const res = await getData<Monster[]>('https://jsonplaceholder.typicode.com/users');
+      setMonsters(res);
+    };
+    fetchUsers();
   }, []);
 
   useEffect(() => {
