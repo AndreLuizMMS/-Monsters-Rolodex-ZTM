@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 
 import { getData } from '../../utils/data.utils';
 
@@ -7,12 +7,11 @@ import SearchInput from '../search-input/Search-input';
 
 import './App.css';
 
-export type Monster {
+export type Monster = {
   id: string;
   name: string;
   email: string;
-
-}
+};
 
 function App() {
   const [monsters, setMonsters] = useState<Monster[]>([]); // lista de monstros
@@ -21,7 +20,9 @@ function App() {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const res = await getData<Monster[]>('https://jsonplaceholder.typicode.com/users');
+      const res = await getData<Monster[]>(
+        'https://jsonplaceholder.typicode.com/users'
+      );
       setMonsters(res);
     };
     fetchUsers();
@@ -35,7 +36,7 @@ function App() {
     setFiltrados(newFiltrados);
   }, [monsters, searchInput]);
 
-  function onSearchChange(event) {
+  function onSearchChange(event: ChangeEvent<HTMLInputElement>): void {
     const searchInputString = event.target.value.toLowerCase(); // transforma o input pra lowerCase = (searchInput) state
     setsearchInput(searchInputString);
   }
